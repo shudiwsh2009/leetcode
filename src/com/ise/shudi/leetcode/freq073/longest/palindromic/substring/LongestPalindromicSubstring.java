@@ -2,7 +2,7 @@ package com.ise.shudi.leetcode.freq073.longest.palindromic.substring;
 
 /**
  * @author Shudi
- * 记忆�?长回文的�?右边界位置和中心位置
+ * 记忆�?长回文的�?右边界位置和中心位置
  */
 public class LongestPalindromicSubstring {
 
@@ -47,46 +47,33 @@ public class LongestPalindromicSubstring {
 	
 	// O(n^2)
 	public String longestPalindrome1(String s) {
-		if(s.length() < 2) {
-			return s;
-		}
-        char[] cs = s.toCharArray();
-        int left = 0, right = 0;
-        int max = 0;
-        String lp = "";
-        for(int mid = 0; mid < cs.length; ++mid) {
-        	left = mid;
-        	right = mid;
-        	while(left >= 0 && right <= cs.length - 1) {
-        		if(cs[left] == cs[right]) {
-        			if(right - left + 1 > max) {
-        				max = right - left + 1;
-        				lp = s.substring(left, right + 1);
-        			}
-        			--left;
-        			++right;
-        		} else {
-        			break;
-        		}
-        	}
-        	if(mid != cs.length - 1) {
-        		left = mid;
-        		right = mid + 1;
-        		while(left >= 0 && right <= cs.length - 1) {
-        			if(cs[left] == cs[right]) {
-            			if(right - left + 1 > max) {
-            				max = right - left + 1;
-            				lp = s.substring(left, right + 1);
-            			}
-            			--left;
-            			++right;
-        			} else {
-        				break;
-        			}
-        		}
-        	}
+        if (s == null || s.length() == 0) {
+            return "";
         }
-        return lp;
+        
+        int length = s.length();    
+        int max = 0;
+        String result = "";
+        for(int i = 1; i <= 2 * length - 1; i++){
+            int count = 1;
+            while(i - count >= 0 && i + count <= 2 * length  && get(s, i - count) == get(s, i + count)){
+                count++;
+            }
+            count--; // there will be one extra count for the outbound #
+            if(count > max) {
+                result = s.substring((i - count) / 2, (i + count) / 2);
+                max = count;
+            }
+        }
+        
+        return result;
+    }
+    
+    private char get(String s, int i) {
+        if(i % 2 == 0)
+            return '#';
+        else 
+            return s.charAt(i / 2);
     }
 	
 	private String insertSharp(String s) {
