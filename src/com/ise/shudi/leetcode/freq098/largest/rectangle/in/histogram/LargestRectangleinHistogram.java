@@ -11,6 +11,7 @@ public class LargestRectangleinHistogram {
 		System.out.println(lrh.largestRectangleArea(height));
 	}
 	
+	// 
 	public int largestRectangleArea(int[] height) {
 		if(height == null || height.length == 0) {
 			return 0;
